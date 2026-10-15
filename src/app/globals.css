@@ -1,26 +1,895 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------------------------------
+ * Design tokens — "Ndebele Heritage Editorial" (Stitch design system)
+ * ---------------------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-epilogue), ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #15157d;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #2e3192;
+  --color-on-primary-container: #9da1ff;
+  --color-primary-fixed: #e1e0ff;
+  --color-primary-fixed-dim: #c0c1ff;
+  --color-on-primary-fixed: #04006d;
+  --color-on-primary-fixed-variant: #373a9b;
+  --color-inverse-primary: #c0c1ff;
+  --color-surface-tint: #4f54b4;
+
+  --color-secondary: #676000;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #f2e400;
+  --color-on-secondary-container: #6b6400;
+  --color-secondary-fixed: #f5e700;
+  --color-secondary-fixed-dim: #d7ca00;
+  --color-on-secondary-fixed: #1f1c00;
+  --color-on-secondary-fixed-variant: #4d4800;
+
+  --color-tertiary: #003013;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #004920;
+  --color-on-tertiary-container: #37c168;
+  --color-tertiary-fixed: #78fc9c;
+  --color-tertiary-fixed-dim: #5adf82;
+  --color-on-tertiary-fixed: #00210b;
+  --color-on-tertiary-fixed-variant: #005225;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-background: #fcf9f8;
+  --color-on-background: #1c1b1b;
+  --color-surface: #fcf9f8;
+  --color-surface-bright: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-variant: #e5e2e1;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0edec;
+  --color-surface-container-high: #ebe7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #464652;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-outline: #777683;
+  --color-outline-variant: #c7c5d4;
+
+  --color-ndebele-red: #e52521;
+  --color-ndebele-sun: #fff000;
+  --color-ndebele-green: #00a651;
+  --color-ink: #111111;
+
+  /* Font family tokens (Stitch pairs `font-<token>` with `text-<token>`). */
+  --font-display-hero: var(--font-display);
+  --font-display-hero-mobile: var(--font-display);
+  --font-headline-lg: var(--font-display);
+  --font-headline-lg-mobile: var(--font-display);
+  --font-headline-md: var(--font-display);
+  --font-headline-md-mobile: var(--font-display);
+  --font-headline-sm: var(--font-display);
+  --font-title-editorial: var(--font-display);
+  --font-label-cultural-caps: var(--font-display);
+  --font-body-lg: var(--font-sans);
+  --font-body-md: var(--font-sans);
+  --font-body-sm: var(--font-sans);
+  --font-label-lg: var(--font-sans);
+  --font-label-md: var(--font-sans);
+
+  --text-display-hero: 56px;
+  --text-display-hero--line-height: 64px;
+  --text-display-hero--letter-spacing: -0.02em;
+  --text-display-hero--font-weight: 900;
+  --text-display-hero-mobile: 36px;
+  --text-display-hero-mobile--line-height: 44px;
+  --text-display-hero-mobile--letter-spacing: -0.01em;
+  --text-display-hero-mobile--font-weight: 900;
+  --text-headline-lg: 40px;
+  --text-headline-lg--line-height: 48px;
+  --text-headline-lg--letter-spacing: -0.015em;
+  --text-headline-lg--font-weight: 800;
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--letter-spacing: -0.01em;
+  --text-headline-lg-mobile--font-weight: 800;
+  --text-headline-md: 28px;
+  --text-headline-md--line-height: 36px;
+  --text-headline-md--font-weight: 700;
+  --text-headline-md-mobile: 22px;
+  --text-headline-md-mobile--line-height: 30px;
+  --text-headline-md-mobile--font-weight: 700;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 700;
+  --text-title-editorial: 18px;
+  --text-title-editorial--line-height: 26px;
+  --text-title-editorial--font-weight: 600;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 30px;
+  --text-body-lg--font-weight: 400;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 26px;
+  --text-body-md--font-weight: 400;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 22px;
+  --text-body-sm--font-weight: 400;
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0.02em;
+  --text-label-lg--font-weight: 600;
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.04em;
+  --text-label-md--font-weight: 600;
+  --text-label-cultural-caps: 11px;
+  --text-label-cultural-caps--line-height: 16px;
+  --text-label-cultural-caps--letter-spacing: 0.12em;
+  --text-label-cultural-caps--font-weight: 800;
+
+  --radius: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.25rem;
+  --spacing-space-2xl: 3.5rem;
+  --spacing-gutter: 1rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-margin: 1rem;
+  --spacing-margin-tablet: 2rem;
+  --spacing-margin-desktop: 3rem;
+
+  /* Sunlit, royal-blue tinted shadows from the design system. */
+  --shadow-sm: 0 2px 8px -1px rgb(46 49 146 / 0.06), 0 1px 3px 0 rgb(17 17 17 / 0.04);
+  --shadow-md: 0 8px 24px -4px rgb(46 49 146 / 0.12), 0 4px 8px -2px rgb(17 17 17 / 0.06);
+  --shadow-lg: 0 18px 40px -8px rgb(46 49 146 / 0.18), 0 8px 16px -6px rgb(17 17 17 / 0.08);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-equalize: equalize 1.1s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* `rounded` (no suffix) is 1rem in the design system. */
+@utility rounded {
+  border-radius: var(--radius);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility custom-scroll-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+:root {
+  --header-offset: 4rem;
+}
+@media (min-width: 48rem) {
+  :root {
+    --header-offset: 5rem;
+  }
+}
+html[data-header-hidden] {
+  --header-offset: 0px;
+}
+
+@layer base {
+  /* Tailwind v3 defaults the Stitch markup was written against. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-surface-variant, currentColor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-padding-top: 6rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: var(--font-sans);
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: var(--color-secondary-fixed);
+    color: var(--color-on-secondary-fixed);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary-container);
+    outline-offset: 2px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Animated icons
+ * Icons draw their strokes on first paint. MotionObserver parks off-screen icons
+ * (data-wait) and replays the draw when they scroll in (data-inview). Hovering or focusing
+ * the nearest interactive ancestor plays a glyph-specific motion.
+ * ---------------------------------------------------------------------------------------- */
+@layer components {
+  .icon {
+    --icon-anim: icon-draw;
+    --icon-fo: 0;
+    display: inline-block;
+    flex-shrink: 0;
+    font-size: 24px;
+    vertical-align: -0.125em;
+    overflow: visible;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .icon > * {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 0;
+    fill-opacity: var(--icon-fo);
+    animation: var(--icon-anim) 0.95s var(--ease-in-out-cubic) var(--icon-delay, 0.12s) both;
+  }
+
+  .icon-filled {
+    --icon-fo: 0.22;
+  }
+
+  .icon-solid {
+    --icon-fo: 1;
+  }
+
+  .icon-filled > *,
+  .icon-solid > * {
+    fill: currentColor;
+  }
+
+  .icon[data-inview] {
+    --icon-anim: icon-draw-again;
+  }
+
+  .icon[data-wait] > * {
+    animation: none;
+    stroke-dashoffset: 1;
+    opacity: 0;
+    fill-opacity: 0;
+  }
+
+  /* Hover / focus triggers: the icon itself or its nearest interactive wrapper. */
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible)
+    .icon[data-hover="draw"]:not([data-wait])
+    > *,
+  .icon[data-hover="draw"]:hover > * {
+    animation:
+      var(--icon-anim) 0.95s var(--ease-in-out-cubic) var(--icon-delay, 0.12s) both,
+      icon-redraw 0.7s var(--ease-in-out-cubic) both;
+  }
+
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="nudge"],
+  .icon[data-hover="nudge"][data-idle] {
+    animation: icon-nudge 0.9s var(--ease-in-out-cubic) infinite;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="nudge-left"] {
+    animation: icon-nudge-left 0.9s var(--ease-in-out-cubic) infinite;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="drop"],
+  .icon[data-hover="drop"][data-idle] {
+    animation: icon-drop 0.9s var(--ease-in-out-cubic) infinite;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="pop"],
+  .icon[data-hover="pop"][data-idle] {
+    animation: icon-pop 0.55s var(--ease-spring);
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="ring"],
+  .icon[data-hover="ring"][data-idle] {
+    animation: icon-ring 0.9s ease-in-out;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="spin"],
+  .icon[data-hover="spin"][data-idle] {
+    animation: icon-spin 1.1s var(--ease-in-out-cubic);
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="beat"],
+  .icon[data-hover="beat"][data-idle] {
+    animation: icon-beat 1s ease-in-out;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="wave"],
+  .icon[data-hover="wave"][data-idle] {
+    animation: icon-wave 1.2s ease-in-out infinite;
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="tilt"] {
+    animation: icon-tilt 0.8s var(--ease-spring);
+  }
+  :is(a, button, label, summary, [role="tab"], .group):is(:hover, :focus-visible) .icon[data-hover="lift"] {
+    animation: icon-lift 0.7s var(--ease-spring);
+  }
+
+  /* Idle loops for icons that should feel "live" without interaction. */
+  .icon[data-idle][data-hover="ring"] {
+    animation: icon-ring 0.9s ease-in-out 2.4s infinite;
+  }
+  .icon[data-idle][data-hover="beat"] {
+    animation: icon-beat 1.6s ease-in-out infinite;
+  }
+  .icon[data-idle][data-hover="spin"] {
+    animation: spin 14s linear infinite;
+  }
+}
+
+@keyframes icon-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+    fill-opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  55% {
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    fill-opacity: var(--icon-fo);
+  }
+}
+@keyframes icon-draw-again {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+    fill-opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  55% {
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    fill-opacity: var(--icon-fo);
+  }
+}
+@keyframes icon-redraw {
+  0% {
+    stroke-dashoffset: 1;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: var(--icon-fo);
+  }
+}
+@keyframes icon-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+@keyframes icon-nudge-left {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+}
+@keyframes icon-drop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2.5px);
+  }
+}
+@keyframes icon-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.22);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes icon-ring {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(14deg);
+  }
+  30% {
+    transform: rotate(-12deg);
+  }
+  45% {
+    transform: rotate(9deg);
+  }
+  60% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes icon-spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes icon-beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.18);
+  }
+  30% {
+    transform: scale(0.96);
+  }
+  45% {
+    transform: scale(1.12);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+@keyframes icon-wave {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+}
+@keyframes icon-tilt {
+  0% {
+    transform: perspective(60px) rotateY(0);
+  }
+  50% {
+    transform: perspective(60px) rotateY(-28deg) translateY(-1px);
+  }
+  100% {
+    transform: perspective(60px) rotateY(0);
+  }
+}
+@keyframes icon-lift {
+  0% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Scroll reveals
+ * [data-reveal] sections fade up, [data-stagger] grids cascade their children. Hidden only
+ * once MotionObserver is running (html[data-motion]); before that a timed fallback reveals
+ * everything so content can never stay invisible.
+ * ---------------------------------------------------------------------------------------- */
+@media (scripting: enabled) {
+  html:not([data-motion]) :is([data-reveal], [data-stagger] > *) {
+    animation: reveal-fallback 0.6s ease-out 2.5s both;
+  }
+}
+
+html[data-motion] [data-reveal]:not([data-inview]),
+html[data-motion] [data-stagger]:not([data-inview]) > * {
+  opacity: 0;
+}
+
+[data-reveal][data-inview] {
+  animation: reveal-up 0.9s var(--ease-out-quint) backwards;
+}
+
+[data-reveal="fade"][data-inview] {
+  animation-name: reveal-fade;
+}
+
+[data-reveal="scale"][data-inview] {
+  animation-name: reveal-scale;
+}
+
+[data-stagger][data-inview] > * {
+  animation: reveal-rise 0.75s var(--ease-out-quint) backwards;
+  animation-delay: calc(min(var(--i, 0), 11) * 70ms + 60ms);
+}
+
+/* Vertical timeline rails grow downward when their list is revealed. */
+[data-stagger][data-inview] > .timeline-line {
+  transform-origin: top;
+  animation: line-grow 1.4s var(--ease-out-quint) backwards;
+}
+@keyframes line-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+[data-stagger] > :nth-child(2) { --i: 1; }
+[data-stagger] > :nth-child(3) { --i: 2; }
+[data-stagger] > :nth-child(4) { --i: 3; }
+[data-stagger] > :nth-child(5) { --i: 4; }
+[data-stagger] > :nth-child(6) { --i: 5; }
+[data-stagger] > :nth-child(7) { --i: 6; }
+[data-stagger] > :nth-child(8) { --i: 7; }
+[data-stagger] > :nth-child(9) { --i: 8; }
+[data-stagger] > :nth-child(10) { --i: 9; }
+[data-stagger] > :nth-child(11) { --i: 10; }
+[data-stagger] > :nth-child(n + 12) { --i: 11; }
+
+@keyframes reveal-fallback {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+}
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.97);
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Hero entrances (pure CSS so above-the-fold content animates on first paint, before JS)
+ * ---------------------------------------------------------------------------------------- */
+.enter-up {
+  animation: reveal-up 0.95s var(--ease-out-quint) var(--d, 0ms) backwards;
+}
+.enter-fade {
+  animation: reveal-fade 1.1s ease-out var(--d, 0ms) backwards;
+}
+.enter-scale {
+  animation: reveal-scale 1s var(--ease-out-quint) var(--d, 0ms) backwards;
+}
+.enter-wipe {
+  animation: wipe-in 1.15s var(--ease-in-out-cubic) var(--d, 0ms) backwards;
+}
+.enter-pop {
+  animation: pop-in 0.8s var(--ease-spring) var(--d, 0ms) backwards;
+}
+/* Hero headline: each word rises out of its own mask. */
+.split-words .w {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  vertical-align: bottom;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.split-words .w > span {
+  display: inline-block;
+  animation: word-rise 0.9s var(--ease-out-quint) calc(var(--d, 0ms) + var(--wi, 0) * 55ms) backwards;
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 0 100% 0 round 20px);
+    transform: scale(1.06);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 20px);
+    transform: scale(1);
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-6deg);
+  }
+}
+@keyframes word-rise {
+  from {
+    transform: translateY(105%) rotate(4deg);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes shimmer {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 96px 0;
+  }
+}
+@keyframes radiate {
+  0% {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+.radiate {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: radiate 3.6s var(--ease-out-quint) infinite;
+}
+@keyframes equalize {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Ndebele chevron band: the design's colour trim, gently travelling. */
+.ndebele-band {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-error) 0 24px,
+    var(--color-secondary-fixed) 24px 48px,
+    var(--color-primary) 48px 72px,
+    var(--color-tertiary-container) 72px 96px
+  );
+  background-size: 96px 100%;
+  animation: shimmer 2.4s linear infinite;
+}
+
+/* Progress fills that sweep in from the left once their section is revealed. */
+[data-inview] .grow-bar,
+.enter-grow {
+  transform-origin: left;
+  animation: bar-grow 1.6s var(--ease-out-quint) var(--d, 250ms) backwards;
+}
+.enter-grow {
+  animation-duration: 0.9s;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Hover lift used on cards across the site. */
+.lift {
+  transition:
+    transform 0.45s var(--ease-out-quint),
+    box-shadow 0.45s var(--ease-out-quint),
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Media that slowly zooms when its card (a .group) is hovered. */
+.zoom-media img {
+  transition: scale 0.9s var(--ease-out-quint);
+}
+.group:hover .zoom-media img,
+.zoom-media:hover img {
+  scale: 1.06;
+}
+
+/* SVG strokes that draw themselves in on first paint (use with pathLength={1}). */
+.draw-line {
+  stroke-dasharray: 1;
+  animation: line-draw 2.2s var(--ease-in-out-cubic) var(--d, 0ms) backwards;
+}
+@keyframes line-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Page transitions (React <ViewTransition> + the View Transitions API)
+ * ---------------------------------------------------------------------------------------- */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-group(nav-pill) {
+  animation-duration: 450ms;
+  animation-timing-function: var(--ease-out-quint);
+  z-index: 101;
+}
+
+::view-transition-old(.page-forward),
+::view-transition-old(.page-back) {
+  animation:
+    160ms ease-in both vt-fade reverse,
+    420ms var(--ease-in-out-cubic) both vt-slide reverse;
+}
+::view-transition-new(.page-forward),
+::view-transition-new(.page-back) {
+  animation:
+    260ms ease-out 140ms both vt-fade,
+    480ms var(--ease-out-quint) both vt-slide;
+}
+::view-transition-old(.page-forward) {
+  --vt-offset: -64px;
+}
+::view-transition-new(.page-forward) {
+  --vt-offset: 64px;
+}
+::view-transition-old(.page-back) {
+  --vt-offset: 64px;
+}
+::view-transition-new(.page-back) {
+  --vt-offset: -64px;
+}
+
+::view-transition-old(.page-fade) {
+  animation: 180ms ease-in both vt-fade reverse;
+}
+::view-transition-new(.page-fade) {
+  animation:
+    280ms ease-out 120ms both vt-fade,
+    520ms var(--ease-out-quint) both vt-rise;
+}
+
+@keyframes vt-rise {
+  from {
+    translate: 0 28px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--vt-offset) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Reduced motion: keep everything visible and still.
+ * ---------------------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  html[data-motion] [data-reveal]:not([data-inview]),
+  html[data-motion] [data-stagger]:not([data-inview]) > *,
+  .icon[data-wait] > * {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }
