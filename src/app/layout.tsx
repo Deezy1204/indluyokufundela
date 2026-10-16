@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Epilogue, Inter } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { NavigationLoader } from "@/components/layout/navigation-loader";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionObserver } from "@/components/motion/motion-observer";
 import { SITE } from "@/lib/site";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
+        <NavigationLoader />
         <main id="main" className="flex w-full flex-1 flex-col pt-16 md:pt-20">
           {children}
         </main>

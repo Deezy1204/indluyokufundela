@@ -613,7 +613,7 @@ export function AboutMobile() {
             <ActionForm
               kind="story"
               className="flex flex-col gap-3 mt-1"
-              successTitle="Siyabonga — thank you!"
+              successTitle="Thank you!"
               successBody="Your story has reached our community team. With your permission we may feature it in our newsletter or on air."
             >
               {/* Input: Full Name */}

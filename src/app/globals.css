@@ -783,6 +783,80 @@ html[data-motion] [data-stagger]:not([data-inview]) > * {
 }
 
 /* ------------------------------------------------------------------------------------------
+ * Navigation loader (components/layout/navigation-loader.tsx). Everything moves with transform
+ * or opacity only, so it keeps animating while the main thread renders the next page.
+ * ---------------------------------------------------------------------------------------- */
+.nav-loader {
+  animation: loader-in 160ms ease-out both;
+}
+@keyframes loader-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Mobile drawer leaving for another page (mobile-drawer.tsx): a compositor-only slide-out that
+   overrides motion's inline transform until the drawer unmounts with the route change. */
+.drawer-leaving > aside {
+  animation: drawer-out 260ms var(--ease-in-out-cubic) both;
+}
+.drawer-leaving > button {
+  animation: loader-in 220ms ease-out both reverse;
+}
+@keyframes drawer-out {
+  to {
+    transform: translateX(-100%);
+    visibility: hidden; /* drops the panel's shadow once it is off-screen */
+  }
+}
+
+.nav-loader-bar {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--color-primary-container) 12%, transparent);
+}
+.nav-loader-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-container),
+    var(--color-secondary-fixed),
+    var(--color-tertiary-fixed-dim)
+  );
+  animation: loader-bar 1.1s var(--ease-in-out-cubic) infinite;
+}
+@keyframes loader-bar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-surface-container);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+  animation: skeleton-sheen 1.4s var(--ease-in-out-cubic) infinite;
+}
+@keyframes skeleton-sheen {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
  * Page transitions (React <ViewTransition> + the View Transitions API)
  * ---------------------------------------------------------------------------------------- */
 ::view-transition {
@@ -804,6 +878,27 @@ html[data-motion] [data-stagger]:not([data-inview]) > * {
   animation-duration: 450ms;
   animation-timing-function: var(--ease-out-quint);
   z-index: 101;
+}
+
+/* The navigation loader leaves as the new page arrives: fade it out above the incoming slide. */
+::view-transition-group(nav-loader) {
+  animation: none;
+  z-index: 99;
+}
+::view-transition-old(nav-loader) {
+  animation: 220ms ease-out both vt-fade-flat reverse;
+}
+
+/* The mobile drawer plays its own exit animation; show it live, above the page, without a ghost copy. */
+::view-transition-group(site-drawer) {
+  animation: none;
+  z-index: 102;
+}
+::view-transition-old(site-drawer) {
+  display: none;
+}
+::view-transition-new(site-drawer) {
+  animation: none;
 }
 
 ::view-transition-old(.page-forward),
@@ -840,6 +935,39 @@ html[data-motion] [data-stagger]:not([data-inview]) > * {
     520ms var(--ease-out-quint) both vt-rise;
 }
 
+/* Phones: shorter, opacity-only fades. Blurring full-screen snapshots is costly on mobile GPUs, and
+   the delayed fade-in made taps feel unresponsive. */
+@media (width < 48rem) {
+  ::view-transition-old(.page-forward),
+  ::view-transition-old(.page-back),
+  ::view-transition-old(.page-fade) {
+    animation: 120ms ease-in both vt-fade-flat reverse;
+  }
+  ::view-transition-new(.page-forward),
+  ::view-transition-new(.page-back) {
+    animation:
+      180ms ease-out 40ms both vt-fade-flat,
+      300ms var(--ease-out-quint) both vt-slide;
+  }
+  ::view-transition-new(.page-fade) {
+    animation: 180ms ease-out 40ms both vt-fade-flat;
+  }
+  ::view-transition-new(.page-forward) {
+    --vt-offset: 32px;
+  }
+  ::view-transition-new(.page-back) {
+    --vt-offset: -32px;
+  }
+}
+
+@keyframes vt-fade-flat {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 @keyframes vt-rise {
   from {
     translate: 0 28px;

@@ -9,14 +9,17 @@ export function Marquee({
   children,
   className,
   gap = "0.75rem",
+  duration,
   reverse,
 }: {
   children: ReactNode;
   className?: string;
   gap?: string;
+  /** Time for one full copy to pass, e.g. "80s". Defaults to the theme's --animate-marquee speed. */
+  duration?: string;
   reverse?: boolean;
 }) {
-  const copy = "flex shrink-0 items-center gap-[var(--marquee-gap)] pr-[var(--marquee-gap)]";
+  const copy = "flex shrink-0 items-stretch gap-[var(--marquee-gap)] pr-[var(--marquee-gap)]";
   return (
     <div
       style={{ "--marquee-gap": gap } as CSSProperties}
@@ -26,6 +29,7 @@ export function Marquee({
       )}
     >
       <div
+        style={duration ? { animationDuration: duration } : undefined}
         className={cn(
           "flex w-max animate-marquee group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused]",
           reverse && "[animation-direction:reverse]",

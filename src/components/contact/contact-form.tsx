@@ -88,7 +88,7 @@ export function ContactForm({ variant }: { variant: Variant }) {
     <ActionForm
       kind="contact"
       className={variant === "desktop" ? "space-y-5" : "flex flex-col gap-space-sm"}
-      successTitle="Siyabonga — message received"
+      successTitle="Thank you — message received"
       successBody="An Indlu Yokufundela coordinator will reply within 24 business hours."
     >
       <AnimatePresence>

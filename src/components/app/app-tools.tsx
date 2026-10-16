@@ -54,7 +54,7 @@ export function WaitlistForm({ variant }: { variant: "desktop" | "mobile" }) {
       kind="waitlist"
       extra={{ source: "mobile-app-page" }}
       className={cn("flex flex-col", desktop ? "mt-1 gap-2.5" : "gap-space-xs")}
-      successTitle="Siyabonga!"
+      successTitle="Thank you!"
       successBody={
         desktop
           ? `You have secured early access beta priority. We'll email you the moment the ${platform ? STORE[platform] : "beta"} build is ready.`

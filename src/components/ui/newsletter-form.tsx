@@ -61,7 +61,7 @@ export function NewsletterForm({ layout = "stacked", tone = "dark", placeholder 
               <Icon name="mark_email_read" className="text-[18px]" />
             </span>
             <span className="font-body-sm text-body-sm">
-              <strong className="font-semibold">Siyabonga!</strong> You&apos;re on the Imbizo list.
+              <strong className="font-semibold">Thank you!</strong> You&apos;re on the Imbizo list.
             </span>
           </motion.div>
         ) : (

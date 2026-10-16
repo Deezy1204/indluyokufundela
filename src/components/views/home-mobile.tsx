@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Icon } from "@/components/icons/icon";
+import type { IconName } from "@/components/icons/icon-data";
 import { d } from "@/components/motion/delay";
 import { Marquee } from "@/components/motion/marquee";
 import { SplitWords } from "@/components/motion/split-words";
@@ -16,6 +17,16 @@ import img099 from "@/assets/images/home/099.webp";
 import img100 from "@/assets/images/home/100.webp";
 import img101 from "@/assets/images/home/101.webp";
 import img102 from "@/assets/images/home/102.webp";
+
+/** Partner cards for the scrolling strip. `tile` colours the logo square until real partner logos are added. */
+const PARTNERS: { name: string; role: string; icon: IconName; tile: string }[] = [
+  { name: "National Arts Council of Zimbabwe", role: "Arts council", icon: "account_balance", tile: "bg-primary-fixed text-primary" },
+  { name: "Skyz Metro FM 100.3", role: "Radio partner", icon: "radio", tile: "bg-secondary-fixed text-on-secondary-fixed" },
+  { name: "'Amabooks Publishers", role: "Publisher", icon: "menu_book", tile: "bg-tertiary-fixed text-on-tertiary-fixed" },
+  { name: "Zimbabwe Book Development Council", role: "Book development", icon: "library_books", tile: "bg-primary-fixed text-primary" },
+  { name: "Culture Fund of Zimbabwe", role: "Culture funding", icon: "diversity_3", tile: "bg-error-container text-on-error-container" },
+  { name: "Bulawayo City Council Libraries", role: "Public libraries", icon: "local_library", tile: "bg-secondary-fixed text-on-secondary-fixed" },
+];
 
 export function HomeMobile() {
   return (
@@ -537,44 +548,23 @@ export function HomeMobile() {
                 Warmest gratitude to the organizations and cultural custodians standing alongside Indlu Yokufundela throughout the years.
               </p>
             </div>
-            {/* Horizontal scrolling partner pill carousel */}
-            <Marquee className="py-2 -mx-margin" gap="0.5rem">
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="account_balance" className="text-primary text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  National Arts Council of Zimbabwe
-                </span>
-              </div>
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="radio" className="text-secondary text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  Skyz Metro FM 100.3
-                </span>
-              </div>
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="menu_book" className="text-tertiary-container text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  &apos;Amabooks Publishers
-                </span>
-              </div>
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="library_books" className="text-primary text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  Zimbabwe Book Development Council
-                </span>
-              </div>
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="diversity_3" className="text-error text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  Culture Fund of Zimbabwe
-                </span>
-              </div>
-              <div className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest shadow-sm">
-                <Icon name="local_library" className="text-secondary text-[20px]" />
-                <span className="font-label-lg text-label-lg font-bold text-on-surface">
-                  Bulawayo City Council Libraries
-                </span>
-              </div>
+            {/* Slow-scrolling partner cards (logo tile + name); tap or hover pauses the strip */}
+            <Marquee className="py-3 -mx-margin" gap="0.75rem" duration="75s">
+              {PARTNERS.map((p) => (
+                <div key={p.name} className="w-64 shrink-0 flex flex-col gap-4 p-5 rounded-2xl bg-surface-container-lowest shadow-sm">
+                  <span className={`w-16 h-16 rounded-xl flex items-center justify-center ${p.tile}`}>
+                    <Icon name={p.icon} className="text-[34px]" />
+                  </span>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-title-editorial text-title-editorial font-bold text-on-surface">
+                      {p.name}
+                    </span>
+                    <span className="font-label-cultural-caps text-label-cultural-caps uppercase text-secondary">
+                      {p.role}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </Marquee>
           </div>
         </section>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, type Variants } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/brand/logo.png";
 import { Icon } from "@/components/icons/icon";
 import { Link } from "@/components/ui/link";
@@ -33,8 +33,31 @@ export function MobileDrawer({ pathname, lang, onClose }: { pathname: string; la
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  // Going to another page: slide out with CSS (.drawer-leaving) instead of an animated unmount, whose
+  // completion would interrupt React mid-render of the next page and restart it. The header closes
+  // the drawer for real in the commit that shows the new page; same-page links just close it.
+  const [leaving, setLeaving] = useState(false);
+  const leaveFor = (href: string) => () => {
+    if (href.split(/[?#]/)[0] === pathname) onClose();
+    else setLeaving(true);
+  };
+  useEffect(() => {
+    if (!leaving) return;
+    const timer = setTimeout(onClose, 10_000);
+    return () => clearTimeout(timer);
+  }, [leaving, onClose]);
+
+  // Its own view-transition name keeps it out of the page snapshot, so its slide-out isn't
+  // duplicated by a fading copy while the route animates in (see globals.css).
   return (
-    <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div
+      className={cn("fixed inset-0 z-[60]", leaving && "drawer-leaving")}
+      inert={leaving}
+      style={{ viewTransitionName: "site-drawer" }}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
       <motion.button
         type="button"
         aria-label="Close menu"
@@ -82,6 +105,7 @@ export function MobileDrawer({ pathname, lang, onClose }: { pathname: string; la
               <motion.div key={n.href} variants={item}>
                 <Link
                   href={n.href}
+                  onNavigate={leaveFor(n.href)}
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "group relative flex items-center gap-4 rounded-2xl px-4 py-3 transition-colors",
@@ -103,16 +127,8 @@ export function MobileDrawer({ pathname, lang, onClose }: { pathname: string; la
                   >
                     <Icon name={n.icon} className="text-[20px]" />
                   </span>
-                  <span className="relative flex flex-col">
-                    <span className="font-headline-sm text-[17px] leading-tight">{lang === "nde" ? n.ndebele : n.label}</span>
-                    <span
-                      className={cn(
-                        "font-label-cultural-caps text-label-cultural-caps uppercase",
-                        active ? "text-primary-fixed-dim" : "text-on-surface-variant",
-                      )}
-                    >
-                      {lang === "nde" ? n.label : n.ndebele}
-                    </span>
+                  <span className="relative font-headline-sm text-[17px] leading-tight">
+                    {lang === "nde" ? n.ndebele : n.label}
                   </span>
                   <Icon
                     name="chevron_right"
@@ -127,6 +143,7 @@ export function MobileDrawer({ pathname, lang, onClose }: { pathname: string; la
         <motion.div variants={item} className="mt-5 flex flex-col gap-2 px-5">
           <Link
             href="/contact?topic=join"
+            onNavigate={leaveFor("/contact?topic=join")}
             className="group flex h-12 items-center justify-center gap-2 rounded-full bg-secondary-container font-label-lg text-label-lg font-bold text-on-secondary-fixed shadow-sm active:scale-95"
           >
             <Icon name="handshake" className="text-[20px]" />
@@ -134,6 +151,7 @@ export function MobileDrawer({ pathname, lang, onClose }: { pathname: string; la
           </Link>
           <Link
             href="/mobile-app"
+            onNavigate={leaveFor("/mobile-app")}
             className="group flex h-12 items-center justify-center gap-2 rounded-full bg-primary font-label-lg text-label-lg font-bold text-on-primary shadow-md active:scale-95"
           >
             <Icon name="install_mobile" className="text-[20px]" />

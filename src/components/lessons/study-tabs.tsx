@@ -67,7 +67,7 @@ function Quiz() {
         <h3 className="font-headline-sm text-headline-sm text-primary">
           You scored {score} of {QUESTIONS.length}
         </h3>
-        <p className="font-body-sm text-body-sm text-on-surface-variant">{score === QUESTIONS.length ? "Halala! A perfect round." : "Review the vocabulary table and try again."}</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant">{score === QUESTIONS.length ? "Well done! A perfect round." : "Review the vocabulary table and try again."}</p>
         <button
           type="button"
           onClick={() => {

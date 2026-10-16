@@ -42,6 +42,12 @@ export function whatsapp(number: string) {
   return `https://wa.me/${number.replace(/\D/g, "")}`;
 }
 
+/**
+ * The pages are English-only for now. Flip this once the isiNdebele translation is ready: it brings back
+ * the EN/NDE toggle in the header, which switches the navigation labels below to `ndebele`.
+ */
+export const NDEBELE_ENABLED = false;
+
 export type NavItem = { href: string; label: string; icon: IconName; ndebele: string };
 
 /** Primary navigation, in the order the Stitch header lists it. */

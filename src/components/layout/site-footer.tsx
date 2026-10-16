@@ -26,31 +26,31 @@ const SOCIAL: { label: string; icon: IconName; href?: string }[] = [
 
 const GROUPS: { title: string; icon: IconName; links: { href: string; label: string }[] }[] = [
   {
-    title: "Izehlakalo (Events & Programs)",
+    title: "Events & Programs",
     icon: "event",
     links: [
-      { href: "/events", label: "Imibukiso Yezincwadi (Book Fairs)" },
-      { href: "/events", label: "Ama-Workshop Okubhala (Writing Workshops)" },
-      { href: "/events", label: "Inganekwane Zomphakathi (Folk Story Sessions)" },
-      { href: "/events", label: "Umgubho Wesiko (Cultural Festivals)" },
+      { href: "/events", label: "Book Fairs" },
+      { href: "/events", label: "Writing Workshops" },
+      { href: "/events", label: "Folk Story Sessions" },
+      { href: "/events", label: "Cultural Festivals" },
     ],
   },
   {
-    title: "Izinsiza (Literary Resources)",
+    title: "Literary Resources",
     icon: "menu_book",
     links: [
-      { href: "/books", label: "Umgcinimafa Wezincwadi (Digital Archive)" },
-      { href: "/watch", label: "Umsindo Wamagugu (Oral Audio Tales)" },
-      { href: "/lessons", label: "Izaga Lezisho (Proverbs & Idioms)" },
+      { href: "/books", label: "Digital Archive" },
+      { href: "/watch", label: "Oral Audio Tales" },
+      { href: "/lessons", label: "Proverbs & Idioms" },
     ],
   },
   {
-    title: "Umphakathi (Community & Contact)",
+    title: "Community & Contact",
     icon: "diversity_3",
     links: [
-      { href: "/about", label: "Mayelana Lendlu Yokufundela" },
-      { href: "/contact?topic=volunteer", label: "Bambisana Lathi (Host an Event / Volunteer)" },
-      { href: "/contact", label: "Xhumana Lathi (Contact Us)" },
+      { href: "/about", label: `About ${SITE.name}` },
+      { href: "/contact?topic=volunteer", label: "Host an Event / Volunteer" },
+      { href: "/contact", label: "Contact Us" },
     ],
   },
 ];
@@ -222,7 +222,7 @@ export function SiteFooter() {
         <Socials size="lg" />
         <div className="flex flex-col gap-1 border-t border-outline/20 pt-space-md pb-space-lg text-center font-body-sm text-body-sm text-outline-variant">
           <p>
-            © {year} {SITE.name}. Wonke amalungelo agodliwe.
+            © {year} {SITE.name}. All rights reserved.
           </p>
           <p className="font-label-cultural-caps text-label-cultural-caps uppercase tracking-widest text-secondary-container">
             &apos;{SITE.motto}&apos;

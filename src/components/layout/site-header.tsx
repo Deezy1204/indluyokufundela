@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
 import { useEffect, useId, useState, useSyncExternalStore, ViewTransition } from "react";
 import logo from "@/assets/brand/logo.png";
 import { Icon } from "@/components/icons/icon";
 import { Link } from "@/components/ui/link";
 import { cn } from "@/lib/cn";
-import { NAV, SITE } from "@/lib/site";
+import { NAV, NDEBELE_ENABLED, SITE } from "@/lib/site";
 import { MobileDrawer } from "./mobile-drawer";
 
 export type Lang = "en" | "nde";
@@ -20,6 +20,7 @@ function subscribeLang(cb: () => void) {
   return () => langListeners.delete(cb);
 }
 function readLang(): Lang {
+  if (!NDEBELE_ENABLED) return "en";
   try {
     return localStorage.getItem(LANG_KEY) === "nde" ? "nde" : "en";
   } catch {
@@ -117,6 +118,7 @@ function Brand({ small }: { small?: boolean }) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const [lang] = useLang();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -143,6 +145,19 @@ export function SiteHeader() {
   useEffect(() => {
     document.documentElement.toggleAttribute("data-header-hidden", hidden);
   }, [hidden]);
+
+  // Drawer links only mount when the menu opens, so they can't prefetch until then and a quick tap
+  // waits on the network. Warm the main routes once the browser is idle (skipped under Data Saver).
+  useEffect(() => {
+    if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return;
+    const warm = () => NAV.forEach((item) => router.prefetch(item.href));
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(warm, { timeout: 3000 });
+      return () => cancelIdleCallback(id);
+    }
+    const id = setTimeout(warm, 1500);
+    return () => clearTimeout(id);
+  }, [router]);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -188,7 +203,7 @@ export function SiteHeader() {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-3">
-            <LangToggle />
+            {NDEBELE_ENABLED && <LangToggle />}
             <Link
               href="/contact?topic=join"
               className="group inline-flex items-center gap-2 rounded-full bg-secondary-fixed px-6 py-2.5 font-label-lg text-label-lg text-on-secondary-fixed shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary-fixed-dim hover:shadow-md"
@@ -230,7 +245,7 @@ export function SiteHeader() {
             <Brand small />
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <LangToggle compact />
+            {NDEBELE_ENABLED && <LangToggle compact />}
             <Link
               href="/contact?topic=join"
               className="flex h-10 items-center rounded-full bg-secondary-container px-4 font-label-lg text-label-lg font-bold text-on-secondary-fixed shadow-sm transition-transform active:scale-95 max-[400px]:hidden"
